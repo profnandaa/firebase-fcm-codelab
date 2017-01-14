@@ -33,6 +33,9 @@ messaging.requestPermission()
     })
     .then(function (token) {
         console.log('token: ', token);
+        // we can write back this tokens to firebase for later
+        // use in pushing notifications
+        firebase.database().ref('/tokens/' + token).set("accepted");
     })
     .catch(function (err) {
         console.log(err);
