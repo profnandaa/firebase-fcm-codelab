@@ -1,3 +1,4 @@
+importScripts('./cookie.js');
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyBKxzkcHHxy3gyPx2kno_nyV7iibXUqycU",
@@ -35,7 +36,22 @@ messaging.requestPermission()
         console.log('token: ', token);
         // we can write back this tokens to firebase for later
         // use in pushing notifications
-        firebase.database().ref('/tokens/' + token).set("accepted");
+
+        // getCookie and setCookie defined in another file (./cookies.js)
+        if (!getCookie('devfest_notif')) {
+             // ask for name
+            var name = prompt("What's your good name, friend?");
+            console.log(name);
+            // limit the length to 14 to avoid long inputs
+            // we know users :)
+            firebase.database().ref('/tokens/' + token).set(name.substring(0, 14))
+                .then(function (snapshot) {
+                    // saved
+                    // set cookie so that we don't keep asking the user everytime
+                    setCookie('devfest_notif', true);
+                });
+        }
+        
     })
     .catch(function (err) {
         console.log(err);
