@@ -1,4 +1,3 @@
-importScripts('./cookie.js');
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyBKxzkcHHxy3gyPx2kno_nyV7iibXUqycU",
